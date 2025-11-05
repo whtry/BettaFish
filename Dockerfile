@@ -6,8 +6,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/ \
     PIP_TRUSTED_HOST=mirrors.aliyun.com 
 
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources\
-    sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources
+
 
 # Prevent Python from writing .pyc files, buffer stdout/stderr, and pin common tooling paths
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -43,15 +43,26 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxshmfence1 \
     libgbm1 \
     ffmpeg \
+    ca-certificates\
+    tar\
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install the latest uv release and expose it on PATH
-RUN curl -LsSf --retry 3 --retry-delay 2 --proto '=https' --proto-redir '=https' --tlsv1.2 https://astral.sh/uv/install.sh | sh
+
+# 使用GitHub加速源下载uv安装包（避免直接访问astral.sh）
+RUN curl -LsSf "https://wget.la/https://github.com/astral-sh/uv/releases/download/0.9.7/uv-x86_64-unknown-linux-musl.tar.gz" \
+    | tar -xz -C /usr/local/bin --strip-components=1 && \
+    # 验证安装
+    uv --version
 
 WORKDIR /app
 
 # Install Python dependencies first to leverage Docker layer caching
 COPY requirements.txt ./
+
+ENV UV_INDEX_URL="https://mirrors.aliyun.com/pypi/simple/" \
+    UV_TRUSTED_HOST="mirrors.aliyun.com"
+
 RUN uv pip install --system -r requirements.txt
 
 # Install Playwright browser binaries (system deps already handled above)
