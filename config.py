@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     # ====================== 数据库配置 ======================
     DB_DIALECT: str = Field("mysql", description="数据库类型，例如 'mysql' 或 'postgresql'")
     DB_HOST: str = Field("mysql", description="数据库主机，本地默认使用mysql容器")
-    DB_PORT: int = Field(3306, description="数据库端口号")
+    DB_PORT: int = Field(3307, description="数据库端口号")
     DB_USER: str = Field("root", description="数据库用户名，本地默认root")
     DB_PASSWORD: str = Field("local_password", description="数据库密码，本地默认密码")
     DB_NAME: str = Field("mindspider", description="数据库名称，本地默认mindspider")

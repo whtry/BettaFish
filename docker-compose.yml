@@ -34,7 +34,7 @@ services:
       - MYSQL_DATABASE=mindspider
       - MYSQL_CHARSET=utf8mb4
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./MindSpider/schema/mindspider_tables.sql:/docker-entrypoint-initdb.d/init.sql
@@ -65,7 +65,7 @@ services:
       - "8888:8080"
     volumes:
       - searxng-data:/etc/searxng
-      - ./searxng.local.settings.yml:/etc/searxng/settings.yml:ro
+      - ./searxng.local.settings.yml:/etc/searxng/settings.yml
     environment:
       - SEARXNG_BASE_URL=http://searxng:8888
       - SEARXNG_SETTINGS_PATH=/etc/searxng/settings.yml
