@@ -2,6 +2,13 @@ FROM python:3.11-slim
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Satisefy Chinese Mainland Internet environment
+ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/ \
+    PIP_TRUSTED_HOST=mirrors.aliyun.com 
+
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources\
+    sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources
+
 # Prevent Python from writing .pyc files, buffer stdout/stderr, and pin common tooling paths
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
