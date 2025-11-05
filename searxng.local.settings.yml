@@ -1,0 +1,35 @@
+search:
+  safe_search: 0
+  language: zh-CN
+
+engines:
+  # 主流中国大陆可用引擎
+  - name: baidu
+    shortcut: b
+    engine: baidu
+
+  - name: qihoo
+    engine: qihoo
+
+  - name: sogou
+    engine: sogou
+
+  - name: bing
+    shortcut: g
+    engine: bing
+
+ui:
+  static_url: /static
+  default_theme: simple
+  autocomplete: false
+
+server:
+  listen_address: 0.0.0.0
+  port: 8080
+  secret_key: "your_secret_key"
+
+results_on_new_tab: false
+trackers:
+  enabled: false
+log:
+  level: WARNING

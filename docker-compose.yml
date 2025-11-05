@@ -5,13 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: bettafish:latest
+    image: bettafish:local
     container_name: bettafish
     restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      - PYTHONUNBUFFERED=1
     ports:
       - "5000:5000"
       - "8501:8501"
@@ -23,3 +19,64 @@ services:
       - ./insight_engine_streamlit_reports:/app/insight_engine_streamlit_reports
       - ./media_engine_streamlit_reports:/app/media_engine_streamlit_reports
       - ./query_engine_streamlit_reports:/app/query_engine_streamlit_reports
+    depends_on:
+      - mysql
+      - searxng
+    networks:
+      - betta-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: betta-mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=local_password
+      - MYSQL_DATABASE=mindspider
+      - MYSQL_CHARSET=utf8mb4
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./MindSpider/schema/mindspider_tables.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - betta-network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: betta-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - betta-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: betta-searxng
+    restart: unless-stopped
+    ports:
+      - "8888:8080"
+    volumes:
+      - searxng-data:/etc/searxng
+      - ./searxng.local.settings.yml:/etc/searxng/settings.yml:ro
+    environment:
+      - SEARXNG_BASE_URL=http://searxng:8888
+      - SEARXNG_SETTINGS_PATH=/etc/searxng/settings.yml
+    networks:
+      - betta-network
+
+networks:
+  betta-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  ollama-data:
+  searxng-data:
