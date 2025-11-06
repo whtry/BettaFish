@@ -4,6 +4,10 @@
 
 <a href="https://trendshift.io/repositories/15286" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15286" alt="666ghj%2FBettaFish | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
+<a href="https://aihubmix.com/?aff=8Ds9" target="_blank"><img src="./static/image/logo_aihubmix.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a>&ensp;
+<a href="https://lioncc.ai/" target="_blank"><img src="./static/image/logo_loincc.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a>&ensp;
+<a href="https://share.302.ai/P66Qe3" target="_blank"><img src="./static/image/logo_302ai.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a>
+
 [![GitHub Stars](https://img.shields.io/github/stars/666ghj/Weibo_PublicOpinion_AnalysisSystem?style=flat-square)](https://github.com/666ghj/Weibo_PublicOpinion_AnalysisSystem/stargazers)
 [![GitHub Watchers](https://img.shields.io/github/watchers/666ghj/Weibo_PublicOpinion_AnalysisSystem?style=flat-square)](https://github.com/666ghj/Weibo_PublicOpinion_AnalysisSystem/watchers)
 [![GitHub Forks](https://img.shields.io/github/forks/666ghj/Weibo_PublicOpinion_AnalysisSystem?style=flat-square)](https://github.com/666ghj/Weibo_PublicOpinion_AnalysisSystem/network)
@@ -46,12 +50,26 @@ Beyond just report quality, compared to similar products, we have 🚀 six major
 **Starting with public opinion, but not limited to public opinion**. The goal of "WeiYu" is to become a simple and universal data analysis engine that drives all business scenarios.
 
 > For example, you only need to simply modify the API parameters and prompts of the Agent toolset to transform it into a financial market analysis system.
+>
+> Here's a relatively active Linux.do project discussion thread: https://linux.do/t/topic/1009280
 
 <div align="center">
 <img src="static/image/system_schematic.png" alt="banner" width="800">
 
 Say goodbye to traditional data dashboards. In "WeiYu", everything starts with a simple question - you just need to ask your analysis needs like a conversation
 </div>
+
+## 🪄 Sponsors
+
+LLM Model API Sponsor: <a href="https://aihubmix.com/?aff=8Ds9" target="_blank"><img src="./static/image/logo_aihubmix.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a>
+
+Solomon Blog LionCC.ai; Programming Carpool codecodex.ai; Programming Computing Power VibeCodingAPI.ai: <span style="margin-left: 10px"><a href="https://lioncc.ai/" target="_blank"><img src="./static/image/logo_loincc.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a></span>
+
+<details>
+<summary>Pay-as-you-go enterprise-grade AI resource platform offering a comprehensive set of AI models and APIs, plus multiple ready-to-use online AI apps: <span style="margin-left: 10px"><a href="https://share.302.ai/P66Qe3" target="_blank"><img src="./static/image/logo_302ai.png" alt="302.ai" height="40"/></a></span></summary>
+<img src="static/image/banner_302ai.jpg" alt="banner">
+302.AI is a pay-as-you-go enterprise AI resource hub that offers the latest and most comprehensive AI models and APIs on the market, along with a variety of ready-to-use online AI applications.
+</details>
 
 ## 🏗️ System Architecture
 
@@ -253,6 +271,7 @@ INSIGHT_ENGINE_MODEL_NAME = "kimi-k2-0711-preview"
 # Media Agent
 ...
 ```
+Recommended LLM API Provider: [Reasoning Era](https://aihubmix.com/?aff=8Ds9)
 
 #### 4.2 Database Initialization
 
@@ -264,7 +283,9 @@ INSIGHT_ENGINE_MODEL_NAME = "kimi-k2-0711-preview"
 ```bash
 # Local MySQL database initialization
 cd MindSpider
-python schema/init_database.py
+# Project initialization
+python main.py --setup
+
 ```
 
 **Option 2: Use Cloud Database Service (Recommended)**
@@ -338,6 +359,9 @@ cd MindSpider
 
 # Project initialization
 python main.py --setup
+
+# Run topic extraction (get hot news and keywords)
+python main.py --broad-topic
 
 # Run complete crawler workflow
 python main.py --complete --date 2024-01-20

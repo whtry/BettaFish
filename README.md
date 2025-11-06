@@ -4,6 +4,10 @@
 
 <a href="https://trendshift.io/repositories/15286" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15286" alt="666ghj%2FBettaFish | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
+<a href="https://aihubmix.com/?aff=8Ds9" target="_blank"><img src="./static/image/logo_aihubmix.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a>&ensp;
+<a href="https://lioncc.ai/" target="_blank"><img src="./static/image/logo_loincc.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a>&ensp;
+<a href="https://share.302.ai/P66Qe3" target="_blank"><img src="./static/image/logo_302ai.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a>
+
 [![GitHub Stars](https://img.shields.io/github/stars/666ghj/Weibo_PublicOpinion_AnalysisSystem?style=flat-square)](https://github.com/666ghj/Weibo_PublicOpinion_AnalysisSystem/stargazers)
 [![GitHub Watchers](https://img.shields.io/github/watchers/666ghj/Weibo_PublicOpinion_AnalysisSystem?style=flat-square)](https://github.com/666ghj/Weibo_PublicOpinion_AnalysisSystem/watchers)
 [![GitHub Forks](https://img.shields.io/github/forks/666ghj/Weibo_PublicOpinion_AnalysisSystem?style=flat-square)](https://github.com/666ghj/Weibo_PublicOpinion_AnalysisSystem/network)
@@ -13,6 +17,7 @@
 [![GitHub License](https://img.shields.io/github/license/666ghj/Weibo_PublicOpinion_AnalysisSystem?style=flat-square)](https://github.com/666ghj/Weibo_PublicOpinion_AnalysisSystem/blob/main/LICENSE)
 [![Version](https://img.shields.io/badge/version-v1.0.0-green.svg?style=flat-square)](https://github.com/666ghj/Weibo_PublicOpinion_AnalysisSystem)
 [![Docker](https://img.shields.io/badge/Docker-Build-2496ED?style=flat-square&logo=docker&logoColor=white)](https://hub.docker.com/)
+
 
 
 [English](./README-EN.md) | [中文文档](./README.md)
@@ -54,6 +59,17 @@
 
 告别传统的数据看板，在“微舆”，一切由一个简单的问题开始，您只需像对话一样，提出您的分析需求
 </div>
+
+## 🪄 赞助商
+
+LLM模型API赞助：<a href="https://aihubmix.com/?aff=8Ds9" target="_blank"><img src="./static/image/logo_aihubmix.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a>
+
+所罗门博客LionCC.ai；编程拼车codecodex.ai；编程算力VibeCodingAPI.ai：</a><span style="margin-left: 10px"><a href="https://aihubmix.com/?aff=8Ds9" target="_blank"><img src="./static/image/logo_loincc.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a>
+
+<details>
+<summary>按用量付费的企业级AI资源平台，提供市场上全面的AI模型和API，以及多种在线AI应用：</a><span style="margin-left: 10px"><a href="https://share.302.ai/P66Qe3" target="_blank"><img src="./static/image/logo_302ai.png" alt="666ghj%2FBettaFish | Trendshift" height="40"/></a></summary>
+<img src="static/image/banner_302ai.jpg" alt="banner">302.AI是一个按用量付费的企业级AI资源平台，提供市场上最新、最全面的AI模型和API，以及多种开箱即用的在线AI应用。
+</details>
 
 ## 🏗️ 系统架构
 
@@ -255,13 +271,14 @@ INSIGHT_ENGINE_MODEL_NAME = "kimi-k2-0711-preview"
 # Media Agent
 ...
 ```
+推荐LLM API供应商：[推理时代](https://aihubmix.com/?aff=8Ds9)
 
 #### 4.2 数据库初始化
 
 **选择1：使用本地数据库**
 
-> ~~MindSpider爬虫系统跟舆情系统是各自独立的，所以需要再去`MindSpider\config.py`配置一下，复制`MindSpider`文件夹下的 `config.py.example` 文件，命名为 `config.py`~~
-先已更改为基于环境变量配置，请复制项目根目录.env.example文件为.env文件，并在其中填写各项配置
+> ~~MindSpider爬虫系统跟舆情系统是各自独立的，所以需要再去`MindSpider\config.py`配置一下，复制`MindSpider`文件夹下的 `config.py.example` 文件，命名为 `config.py`~~  
+现版本已更改为基于环境变量配置，请复制项目根目录.env.example文件为.env文件，并在其中填写各项配置
 ```bash
 # 本地MySQL数据库初始化
 cd MindSpider

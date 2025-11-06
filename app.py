@@ -6,18 +6,15 @@ import os
 import sys
 import subprocess
 import time
-import json
 import threading
 from datetime import datetime
-from queue import Queue, Empty
+from queue import Queue
 from flask import Flask, render_template, request, jsonify, Response
 from flask_socketio import SocketIO, emit
-import signal
 import atexit
 import requests
 from loguru import logger
 import importlib
-import re
 from pathlib import Path
 
 # 导入ReportEngine
@@ -97,20 +94,10 @@ def _load_config_module():
 def read_config_values():
     """Return the current configuration values that are exposed to the frontend."""
     try:
-        # 重新导入 config 模块以获取最新的 Settings 实例
-        importlib.invalidate_caches()
-        if CONFIG_MODULE_NAME in sys.modules:
-            importlib.reload(sys.modules[CONFIG_MODULE_NAME])
-        else:
-            importlib.import_module(CONFIG_MODULE_NAME)
+        # 重新加载配置以获取最新的 Settings 实例
+        from config import reload_settings, settings
+        reload_settings()
         
-        # 从 config 模块获取 settings 实例
-        config_module = sys.modules[CONFIG_MODULE_NAME]
-        if not hasattr(config_module, 'settings'):
-            logger.error("config 模块中没有找到 settings 实例")
-            return {}
-        
-        settings = config_module.settings
         values = {}
         for key in CONFIG_KEYS:
             # 从 Pydantic Settings 实例读取值
@@ -240,7 +227,7 @@ def initialize_system_components():
     except Exception as exc:  # pragma: no cover - 安全捕获
         message = f"停止 ForumEngine 时发生异常: {exc}"
         logs.append(message)
-        logging.exception(message)
+        logger.exception(message)
 
     processes['forum']['status'] = 'stopped'
 
@@ -292,7 +279,7 @@ def initialize_system_components():
             try:
                 stop_forum_engine()
             except Exception:  # pragma: no cover
-                logging.exception("停止ForumEngine失败")
+                logger.exception("停止ForumEngine失败")
         return False, logs, errors
 
     return True, logs, []
@@ -749,7 +736,7 @@ def start_app(app_name):
             processes['forum']['status'] = 'running'
             return jsonify({'success': True, 'message': 'ForumEngine已启动'})
         except Exception as exc:  # pragma: no cover
-            logging.exception("手动启动ForumEngine失败")
+            logger.exception("手动启动ForumEngine失败")
             return jsonify({'success': False, 'message': f'ForumEngine启动失败: {exc}'})
 
     script_path = STREAMLIT_SCRIPTS.get(app_name)
@@ -782,7 +769,7 @@ def stop_app(app_name):
             processes['forum']['status'] = 'stopped'
             return jsonify({'success': True, 'message': 'ForumEngine已停止'})
         except Exception as exc:  # pragma: no cover
-            logging.exception("手动停止ForumEngine失败")
+            logger.exception("手动停止ForumEngine失败")
             return jsonify({'success': False, 'message': f'ForumEngine停止失败: {exc}'})
 
     success, message = stop_streamlit_app(app_name)
@@ -947,7 +934,7 @@ def get_config():
         config_values = read_config_values()
         return jsonify({'success': True, 'config': config_values})
     except Exception as exc:
-        logging.exception("读取配置失败")
+        logger.exception("读取配置失败")
         return jsonify({'success': False, 'message': f'读取配置失败: {exc}'}), 500
 
 
@@ -971,7 +958,7 @@ def update_config():
         updated_config = read_config_values()
         return jsonify({'success': True, 'config': updated_config})
     except Exception as exc:
-        logging.exception("更新配置失败")
+        logger.exception("更新配置失败")
         return jsonify({'success': False, 'message': f'更新配置失败: {exc}'}), 500
 
 
@@ -1007,7 +994,7 @@ def start_system():
             'errors': errors
         }), 500
     except Exception as exc:  # pragma: no cover - 保底捕获
-        logging.exception("系统启动过程中出现异常")
+        logger.exception("系统启动过程中出现异常")
         _set_system_state(started=False)
         return jsonify({'success': False, 'message': f'系统启动异常: {exc}'}), 500
     finally:
